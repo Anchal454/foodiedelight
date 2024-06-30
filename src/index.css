@@ -11,3 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.simplebar-wrapper .simplebar-placeholder{
+  height: 0px!important;
+}
