@@ -9,18 +9,18 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-
+import { sample } from 'lodash';
 import Iconify from '../../../../components/iconify/iconify';
 import Scrollbar from '../../../../components/scrollbar';
 
 import TableNoData from '../table-no-data';
-import TableRow from '../user-table-row';
-import TableHead from '../user-table-head';
+import TableRow from '../table-row';
+import TableHead from '../table-head';
 import TableEmptyRows from '../table-empty-rows';
-import TableToolbar from '../user-table-toolbar';
+import TableToolbar from '../table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
-import RestaurantFormDialog from './AddEdit';
 import { toast } from 'react-toastify';
+import RestaurantFormDialog from './AddEdit';
 // import { fetchRestaurants, updateRestaurant ,deleteRestaurant} from '../api';
 
 
@@ -63,7 +63,7 @@ export default function RestaurantPage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = dataFiltered.map((n) => n.name);
+      const newSelected = dataFiltered.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -135,6 +135,19 @@ export default function RestaurantPage() {
     toast.success("Restaurant details deleted successfully!");
   }
 
+  const onMultiDelete = (ids = []) => {
+    console.log(selected, '099999');
+    // ** call API for delete Restaurant details ( first make this function to async function )
+    // try{
+    // await deleteRestaurants(ids);
+    // } catch (e) {
+    //     console.log(`error:c ${e}`);
+    // }
+    setDataFiltered(prevData => prevData.filter(item => !ids.includes(item.id)));
+    setSelected([])
+    toast.success("Restaurants details deleted successfully!");
+  }
+
   const notFound = !dataFiltered.length && !!filterName;
 
   return (
@@ -152,6 +165,7 @@ export default function RestaurantPage() {
           numSelected={selected.length}
           filterName={filterName}
           onFilterName={handleFilterByName}
+          onMultiDelete={() => onMultiDelete(selected)}
         />
 
         <Scrollbar>
@@ -167,7 +181,10 @@ export default function RestaurantPage() {
                 headLabel={[
                   { id: 'name', label: 'Name' },
                   { id: 'location', label: 'Location' },
+                  { id: 'phone', label: 'Contact Details' },
+                  { id: 'email', label: 'Email' },
                   { id: 'description', label: 'Description' },
+                  { id: 'operatingHours', label: 'Operating Hours' },
                   { id: '' },
                 ]}
               />
@@ -178,8 +195,8 @@ export default function RestaurantPage() {
                     <TableRow
                       key={row.id}
                       data={row}
-                      selected={selected.indexOf(row.name) !== -1}
-                      handleClick={(event) => handleClick(event, row.name)}
+                      selected={selected.indexOf(row.id) !== -1}
+                      handleClick={(event) => handleClick(event, row.id)}
                       onDelete={onDelete}
                       onEdit={onEdit}
                     />
@@ -214,22 +231,11 @@ export default function RestaurantPage() {
 
 export const users = [...Array(24)].map((_, index) => ({
   id: faker.string.uuid(),
-  avatarUrl: `/assets/images/avatars/avatar_${index + 1}.jpg`,
+  avatarUrl: `/assets/images/avatars/cover_14.jpg`,
   name: faker.person.fullName(),
   description: faker.lorem.paragraph(),
   location: faker.location.streetAddress(),
-  // isVerified: faker.datatype.boolean(),
-  // status: sample(['active', 'banned']),
-  // role: sample([
-  //   'Leader',
-  //   'Hr Manager',
-  //   'UI Designer',
-  //   'UX Designer',
-  //   'UI/UX Designer',
-  //   'Project Manager',
-  //   'Backend Developer',
-  //   'Full Stack Designer',
-  //   'Front End Developer',
-  //   'Full Stack Developer',
-  // ]),
+  operatingHours: sample(['24 Hours', '8AM - 8PM', '5 AM - 9 PM']),
+  phone: faker.phone.number('##########'),
+  email: `admin@${faker.person.firstName().toLowerCase()}.com`
 }));

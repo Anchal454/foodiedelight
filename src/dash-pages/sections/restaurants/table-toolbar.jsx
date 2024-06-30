@@ -11,7 +11,7 @@ import Iconify from '../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function UserTableToolbar({ numSelected, filterName, onFilterName }) {
+export default function UserTableToolbar({ numSelected, filterName, onFilterName, onMultiDelete }) {
   return (
     <Toolbar
       sx={{
@@ -31,8 +31,8 @@ export default function UserTableToolbar({ numSelected, filterName, onFilterName
         </Typography>
       ) : (
         <OutlinedInput
-        sx={{width:'50%'}}
-        size='small'
+          sx={{ width: '50%' }}
+          size='small'
           value={filterName}
           onChange={onFilterName}
           placeholder="Search Restaurants by name..."
@@ -49,7 +49,7 @@ export default function UserTableToolbar({ numSelected, filterName, onFilterName
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton onClick={onMultiDelete}>
             <Iconify icon="eva:trash-2-fill" />
           </IconButton>
         </Tooltip>
@@ -68,4 +68,5 @@ UserTableToolbar.propTypes = {
   numSelected: PropTypes.number,
   filterName: PropTypes.string,
   onFilterName: PropTypes.func,
+  onMultiDelete: PropTypes.func,
 };

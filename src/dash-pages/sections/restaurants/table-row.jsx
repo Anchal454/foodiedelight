@@ -50,8 +50,11 @@ export default function UserTableRow({
         </TableCell>
 
         <TableCell>{data.location}</TableCell>
+        <TableCell>+91{data.phone}</TableCell>
+        <TableCell>{data.email}</TableCell>
 
-        <TableCell >{data.description}</TableCell>
+        <TableCell >{data.description.substring(0, 50)}...</TableCell>
+        <TableCell>{data.operatingHours}</TableCell>
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>

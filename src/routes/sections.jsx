@@ -5,7 +5,6 @@ import { CircularProgress } from '@mui/material';
 export const IndexPage = lazy(() => import('../dash-pages/app'));
 export const RestaurantPage = lazy(() => import('../dash-pages/restaurant'));
 export const LoginPage = lazy(() => import('../dash-pages/login'));
-export const ProductsPage = lazy(() => import('../dash-pages/products'));
 export const Page404 = lazy(() => import('../dash-pages/page-not-found'));
 
 // ----------------------------------------------------------------------
@@ -25,7 +24,6 @@ export default function Router() {
       children: [
         { element: <IndexPage />, index: true },
         { path: 'restaurants', element: <RestaurantPage /> },
-        { path: 'products', element: <ProductsPage /> },
       ],
     },
     {
