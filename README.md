@@ -53,7 +53,7 @@ DELETE /restaurants/ - Delete a restaurant
 Frontend functionality: 5 hours
 Frontend presentational aspects (styling, DOM, etc.): 4 hours
 Required Validations: 1 hour
-Unit Test Coverage: 2 hours
+Unit Test Coverage: 1 hours
 
 
 
